@@ -4,6 +4,7 @@ import pygame
 
 from src.constants import Constants
 from src.appLocale import AppLocale
+from src.window import Window
 
 
 def main():
@@ -14,12 +15,7 @@ def main():
 
     """ Set up the game and run the main game loop """
     pygame.init()  # Prepare the pygame module for use
-
-    # Create surface of (width, height), and its window.
-    mainSurface = pygame.display.set_mode((Constants.WIDTH, Constants.HEIGHT))
-
-    pygame.display.set_caption(localeHandler.getString("PYGAME_WINDOW_TITLE"))
-    pygame.mouse.set_visible(1)
+    mainWindow = Window(localeHandler)
 
     while True:
         ev = pygame.event.poll()    # Look for any event

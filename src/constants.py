@@ -6,6 +6,9 @@ class Constants(object):
     WIDTH = 1280
     HEIGHT = 720   # Desired physical surface size, in pixels.
 
+    TOP_SEPARATION_HEIGHT = 30
+    BORDER_LINE_WIDTH = 10
+
     LEFT = 'left'
     RIGHT = 'right'
     UP = 'up'

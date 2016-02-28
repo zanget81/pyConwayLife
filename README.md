@@ -7,4 +7,4 @@ Run
 ---
     From root folder:
 
-    python src/main.py
+    python -m src.main
