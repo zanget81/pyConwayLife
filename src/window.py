@@ -3,6 +3,7 @@ from src.constants import Constants
 
 class Window(object):
     mainSurface = None
+    tableOfEnabledCells = {}
 
     def __init__(self, localeHandler):
         # Create surface of (width, height), and its window.
@@ -25,14 +26,13 @@ class Window(object):
                                 Constants.BORDER_LINE_WIDTH)
 
         whiteColor = (255, 255, 255)
-        blackColor = (133, 133, 133)
 
         # So first fill everything with the background color
-        self.mainSurface.fill((211, 211, 211))
-        self.mainSurface.fill(blackColor, topSeparatorLine)
-        self.mainSurface.fill(blackColor, leftSeparatorLine)
-        self.mainSurface.fill(blackColor, rightSeparatorLine)
-        self.mainSurface.fill(blackColor, bottomSeparatorLine)
+        self.mainSurface.fill(Constants.UNSELECTED_CELL_COLOR)
+        self.mainSurface.fill(Constants.SELECTED_CELL_COLOR, topSeparatorLine)
+        self.mainSurface.fill(Constants.SELECTED_CELL_COLOR, leftSeparatorLine)
+        self.mainSurface.fill(Constants.SELECTED_CELL_COLOR, rightSeparatorLine)
+        self.mainSurface.fill(Constants.SELECTED_CELL_COLOR, bottomSeparatorLine)
 
         #Drawing the game grid
 
@@ -83,4 +83,10 @@ class Window(object):
         selectedCell = self.__isACell(pos)
 
         if (selectedCell):
-            self.mainSurface.fill(Constants.BLACK_COLOR, selectedCell)
+            key = str(selectedCell[0]) + str(selectedCell[1])
+            if (self.tableOfEnabledCells.get(key)):
+                del self.tableOfEnabledCells[key]
+                self.mainSurface.fill(Constants.UNSELECTED_CELL_COLOR, selectedCell)
+            else:
+                self.tableOfEnabledCells[key] = True
+                self.mainSurface.fill(Constants.SELECTED_CELL_COLOR, selectedCell)

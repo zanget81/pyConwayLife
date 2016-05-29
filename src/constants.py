@@ -19,5 +19,6 @@ class Constants(object):
 
     FRAME_RATE = 60
 
-    BLACK_COLOR = (133, 133, 133)
+    SELECTED_CELL_COLOR = (133, 133, 133)
+    UNSELECTED_CELL_COLOR = (211, 211, 211)
 
