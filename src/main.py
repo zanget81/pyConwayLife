@@ -25,6 +25,11 @@ def main():
         if keys[pygame.K_ESCAPE]:
             break
 
+        # handle MOUSEBUTTONUP
+        if ev.type == pygame.MOUSEBUTTONUP:
+            pos = pygame.mouse.get_pos()
+            mainWindow.toggleCell(pos)
+
         pygame.display.update()
 
         #force a constant frame rate of 60fps

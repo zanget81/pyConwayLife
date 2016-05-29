@@ -2,10 +2,11 @@ import pygame
 from src.constants import Constants
 
 class Window(object):
+    mainSurface = None
 
     def __init__(self, localeHandler):
         # Create surface of (width, height), and its window.
-        mainSurface = pygame.display.set_mode((Constants.WIDTH, Constants.HEIGHT))
+        self.mainSurface = pygame.display.set_mode((Constants.WIDTH, Constants.HEIGHT))
         topSeparatorLine    =   (0,
                                 Constants.TOP_SEPARATION_HEIGHT,
                                 Constants.WIDTH,
@@ -27,11 +28,11 @@ class Window(object):
         blackColor = (133, 133, 133)
 
         # So first fill everything with the background color
-        mainSurface.fill((211, 211, 211))
-        mainSurface.fill(blackColor, topSeparatorLine)
-        mainSurface.fill(blackColor, leftSeparatorLine)
-        mainSurface.fill(blackColor, rightSeparatorLine)
-        mainSurface.fill(blackColor, bottomSeparatorLine)
+        self.mainSurface.fill((211, 211, 211))
+        self.mainSurface.fill(blackColor, topSeparatorLine)
+        self.mainSurface.fill(blackColor, leftSeparatorLine)
+        self.mainSurface.fill(blackColor, rightSeparatorLine)
+        self.mainSurface.fill(blackColor, bottomSeparatorLine)
 
         #Drawing the game grid
 
@@ -40,16 +41,46 @@ class Window(object):
             rowSeparationLine =  (Constants.BORDER_LINE_WIDTH,
                                   Constants.TOP_SEPARATION_HEIGHT + Constants.BORDER_LINE_WIDTH + (x * 10),
                                   Constants.WIDTH-(2*Constants.BORDER_LINE_WIDTH),
-                                  2)
-            mainSurface.fill(whiteColor, rowSeparationLine)
+                                  Constants.SEPARATION_LINE_WIDTH)
+            self.mainSurface.fill(whiteColor, rowSeparationLine)
 
         #Drawing the columns
         for x in range(0, Constants.WIDTH / 10 -1):
             columnSeparationLine =  (Constants.BORDER_LINE_WIDTH + (x * 10) ,
                                      Constants.TOP_SEPARATION_HEIGHT + Constants.BORDER_LINE_WIDTH,
-                                     2,
+                                     Constants.SEPARATION_LINE_WIDTH,
                                      Constants.HEIGHT - Constants.TOP_SEPARATION_HEIGHT - (2*Constants.BORDER_LINE_WIDTH))
-            mainSurface.fill(whiteColor, columnSeparationLine)
+            self.mainSurface.fill(whiteColor, columnSeparationLine)
 
         pygame.display.set_caption(localeHandler.getString("PYGAME_WINDOW_TITLE"))
         pygame.mouse.set_visible(1)
+
+    def __isACell(self, pos):
+        cell = ()
+
+        for x in range(0, (Constants.HEIGHT - Constants.TOP_SEPARATION_HEIGHT - Constants.BORDER_LINE_WIDTH) / 10):
+            posXLine = Constants.TOP_SEPARATION_HEIGHT + Constants.BORDER_LINE_WIDTH + (x * 10)
+            posXNextLine = Constants.TOP_SEPARATION_HEIGHT + Constants.BORDER_LINE_WIDTH + ((x+1) * 10)
+
+            if ((pos[1] >= (posXLine + Constants.SEPARATION_LINE_WIDTH)) and
+                (pos[1] <= posXNextLine)):
+                cell = (0, (posXLine + Constants.SEPARATION_LINE_WIDTH), 8, 8)
+
+        for y in range(0, Constants.WIDTH / 10 -1):
+            posYLine = Constants.BORDER_LINE_WIDTH + (y * 10)
+            posYNextLine = Constants.BORDER_LINE_WIDTH + ((y+1) * 10)
+
+            if ((pos[0] >= (posYLine + Constants.SEPARATION_LINE_WIDTH)) and
+                (pos[0] <= posYNextLine) and
+                cell):
+                    cell = ((posYLine + Constants.SEPARATION_LINE_WIDTH), cell[1], 8, 8)
+
+        return cell if (cell and (cell[0] > 0) and (cell[1] > 0)) else ()
+
+
+    def toggleCell(self, pos):
+        self.mainSurface.fill((12, 133, 255), (pos[0], pos[1], 1, 1))
+        selectedCell = self.__isACell(pos)
+
+        if (selectedCell):
+            self.mainSurface.fill(Constants.BLACK_COLOR, selectedCell)

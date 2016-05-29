@@ -1,5 +1,5 @@
-pyMario
-=======
+pyConwayLife
+============
 
 An implementation of Conway's game of life written in python.
 

@@ -8,6 +8,7 @@ class Constants(object):
 
     TOP_SEPARATION_HEIGHT = 30
     BORDER_LINE_WIDTH = 10
+    SEPARATION_LINE_WIDTH = 2
 
     LEFT = 'left'
     RIGHT = 'right'
@@ -17,4 +18,6 @@ class Constants(object):
     LOCALE = 'en-gb'
 
     FRAME_RATE = 60
+
+    BLACK_COLOR = (133, 133, 133)
 
