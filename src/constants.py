@@ -21,4 +21,5 @@ class Constants(object):
 
     SELECTED_CELL_COLOR = (133, 133, 133)
     UNSELECTED_CELL_COLOR = (211, 211, 211)
+    BUTTONS_COLOR = (64, 64, 64)
 
