@@ -16,6 +16,7 @@ def main():
     """ Set up the game and run the main game loop """
     pygame.init()  # Prepare the pygame module for use
     mainWindow = Window(localeHandler)
+    mainWindow.setWindowUpdateSpeed(1000)
 
     while True:
         ev = pygame.event.poll()    # Look for any event
@@ -29,6 +30,9 @@ def main():
         if ev.type == pygame.MOUSEBUTTONUP:
             pos = pygame.mouse.get_pos()
             mainWindow.toggleCell(pos)
+
+        if ev.type == mainWindow.WINDOW_UPDATE_ID:
+            mainWindow.updateWindow()
 
         pygame.display.update()
 
