@@ -5,6 +5,7 @@ class Window(object):
     mainSurface = None
     tableOfEnabledCells = {}
     cellMap = None
+    playPressed = False
     WINDOW_UPDATE_ID = pygame.USEREVENT + 1
 
     def __init__(self, localeHandler):
@@ -30,7 +31,7 @@ class Window(object):
         topButtonLine = (0, 0, Constants.WIDTH, 2)
         bottonButtonLine = (0, Constants.TOP_SEPARATION_HEIGHT-2, Constants.WIDTH, 2)
         leftButtonLine = (0, 0, 2, Constants.TOP_SEPARATION_HEIGHT)
-        rightButtonLine = (40, 0, 2, Constants.TOP_SEPARATION_HEIGHT)
+        rightButtonLine = (Constants.PLAY_PAUSE_BUTTON_WIDTH, 0, 2, Constants.TOP_SEPARATION_HEIGHT)
         rightestButtonLine = (Constants.WIDTH-2, 0, 2, Constants.TOP_SEPARATION_HEIGHT)
 
         whiteColor = (255, 255, 255)
@@ -104,7 +105,29 @@ class Window(object):
         return cell if (cell and (cell[0] > 0) and (cell[1] > 0)) else ()
 
     def __drawPlayPauseButton(self, play):
-        pygame.draw.polygon(self.mainSurface, Constants.BUTTONS_COLOR, [(15,6), (15, 24), (26, 15)])
+        if (play):
+            self.mainSurface.fill(Constants.UNSELECTED_CELL_COLOR, (14,8,4,16))
+            self.mainSurface.fill(Constants.UNSELECTED_CELL_COLOR, (23,8,4,16))
+            pygame.draw.polygon(self.mainSurface, Constants.BUTTONS_COLOR, [(15,6), (15, 24), (26, 15)])
+        else:
+            pygame.draw.polygon(self.mainSurface, Constants.UNSELECTED_CELL_COLOR, [(15,6), (15, 24), (26, 15)])
+            self.mainSurface.fill(Constants.BUTTONS_COLOR, (14,8,4,16))
+            self.mainSurface.fill(Constants.BUTTONS_COLOR, (23,8,4,16))
+
+    def isPlayPauseButtonPressed(self, pos):
+        used = False
+
+        if ((pos[0] < Constants.PLAY_PAUSE_BUTTON_WIDTH) and
+            (pos[1] < Constants.TOP_SEPARATION_HEIGHT)):
+            if (self.playPressed):
+                self.__drawPlayPauseButton(True)
+                self.playPressed = False
+            else:
+                self.__drawPlayPauseButton(False)
+                self.playPressed = True
+            used = True
+
+        return used
 
     def toggleCell(self, pos):
         self.mainSurface.fill((12, 133, 255), (pos[0], pos[1], 1, 1))

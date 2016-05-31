@@ -10,6 +10,8 @@ class Constants(object):
     BORDER_LINE_WIDTH = 10
     SEPARATION_LINE_WIDTH = 2
 
+    PLAY_PAUSE_BUTTON_WIDTH = 40
+
     LEFT = 'left'
     RIGHT = 'right'
     UP = 'up'

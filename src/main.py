@@ -29,7 +29,9 @@ def main():
         # handle MOUSEBUTTONUP
         if ev.type == pygame.MOUSEBUTTONUP:
             pos = pygame.mouse.get_pos()
-            mainWindow.toggleCell(pos)
+
+            if not mainWindow.isPlayPauseButtonPressed(pos):
+                mainWindow.toggleCell(pos)
 
         if ev.type == mainWindow.WINDOW_UPDATE_ID:
             mainWindow.updateWindow()
