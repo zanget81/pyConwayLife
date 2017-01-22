@@ -1,5 +1,6 @@
 
 MIN_NEIGHBOURS_NEEDED_TO_SURVIVE = 2
+MAX_NEIGHBOURS_NEEDED_TO_SURVIVE = 3
 
 class Conway(object):
     listOfActiveCellsPos = []
@@ -8,9 +9,10 @@ class Conway(object):
         self.listOfActiveCellsPos = newActiveList
 
     def updateModel(self):
-        self.applyRule1()
+        self.applyKillingRules()
 
-    def applyRule1(self):
+    #Kill underpopulated and overpopulated cells
+    def applyKillingRules(self):
         removeList = []
         for cellPos in self.listOfActiveCellsPos:
             rightNeighbour = (cellPos[0] + 1, cellPos[1])
@@ -34,7 +36,8 @@ class Conway(object):
                     (NeighbourCell == bottomRightNeighbour)):
                     neighbourCount+=1
 
-            if  (neighbourCount < MIN_NEIGHBOURS_NEEDED_TO_SURVIVE):
+            if  ((neighbourCount < MIN_NEIGHBOURS_NEEDED_TO_SURVIVE) or
+                (neighbourCount > MAX_NEIGHBOURS_NEEDED_TO_SURVIVE)):
                 removeList.append(cellPos)
 
         #Remove dead cells
