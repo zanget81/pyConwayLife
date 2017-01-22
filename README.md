@@ -1,4 +1,4 @@
-pyConwayLife
+pyConwayLife https://travis-ci.org/zanget81/pyConwayLife.svg?branch=master
 ============
 
 An implementation of Conway's game of life written in python.
