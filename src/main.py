@@ -5,6 +5,7 @@ import pygame
 from src.constants import Constants
 from src.appLocale import AppLocale
 from src.window import Window
+from src.conway import Conway
 
 
 def main():
@@ -15,7 +16,7 @@ def main():
 
     """ Set up the game and run the main game loop """
     pygame.init()  # Prepare the pygame module for use
-    mainWindow = Window(localeHandler)
+    mainWindow = Window(localeHandler, Conway)
     mainWindow.setWindowUpdateSpeed(1000)
 
     while True:

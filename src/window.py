@@ -7,8 +7,9 @@ class Window(object):
     cellMap = None
     playPressed = False
     WINDOW_UPDATE_ID = pygame.USEREVENT + 1
+    internalModel = None
 
-    def __init__(self, localeHandler):
+    def __init__(self, localeHandler, modelInstance):
         # Create surface of (width, height), and its window.
         self.mainSurface = pygame.display.set_mode((Constants.WIDTH, Constants.HEIGHT))
         topSeparatorLine    =   (0,
@@ -81,6 +82,9 @@ class Window(object):
 
         pygame.display.set_caption(localeHandler.getString("PYGAME_WINDOW_TITLE"))
         pygame.mouse.set_visible(1)
+
+        #Initialize model
+        internalModel = modelInstance()
 
     def __isACell(self, pos):
         cell = ()
